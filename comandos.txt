@@ -1,0 +1,31 @@
+--> Comandos terminal
+-> FREEZE
+pip freeze
+
+pip freeze > requirements.txt
+
+
+--> Comandos para o DJANGO
+
+django-admin startproject setup .
+python manage.py runserver
+
+1) Crie um novo arquivo chamado .env no diretório raiz da aplicação para armazenar a SECRET_KEY
+Conteúdo do arquivo .env:
+SECRET_KEY=<chave aleatória>COPIAR CÓDIGO
+
+2) Instale o pacote python-dotenv
+pip install python-dotenvCOPIAR CÓDIGO
+
+3) Importe os pacotes python-dotenv e os no arquivo settings.py
+from pathlib import os
+from dotenv import load_dotenvCOPIAR CÓDIGO
+
+4) Importe a SECRET_KEY do arquivo .env e coloque dentro da variável SECRET_KEY no arquivo settings.py
+load_dotenv()
+SECRET_KEY = str(os.getenv('SECRET_KEY'))COPIAR CÓDIGO
+
+5) Gere um arquivo .gitignore no diretório raiz do projeto e inclua o arquivo .env como conteúdo
+Conteúdo do .gitignore:
+.envCOPIAR CÓDIGO
+
