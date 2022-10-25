@@ -29,3 +29,15 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))COPIAR CÓDIGO
 Conteúdo do .gitignore:
 .envCOPIAR CÓDIGO
 
+
+--> COMANDOS GIT 
+git init
+git add .
+git commit -m "projeto Alura Space"
+git remote add origin https://github.com/vinischneider/alura_space.git
+git branch -M master
+git push origin master
+
+-> para commit e push
+git commit -m "projeto Alura Space"
+git push origin master
