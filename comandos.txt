@@ -1,43 +1,96 @@
---> Comandos terminal
+###### Comandos terminal
 -> FREEZE
-pip freeze
+>> pip freeze
+>> pip freeze > requirements.txt
 
-pip freeze > requirements.txt
 
+###### Comandos para o DJANGO
 
---> Comandos para o DJANGO
+>> django-admin startproject setup .
+    - Alterar a SECRET_KEY (instruçao mais abaixo)
+    - Alterar linguagem
+    - Alterar Timezone
+    - Criar arquivo .gitignore
+>> python manage.py runserver
+>> django-admin startapp galeria
+    - settings.py - Instalar APP
+        INSTALLED_APPS = [
+            'django.contrib.admin',
+            'django.contrib.auth',
+            'django.contrib.contenttypes',
+            'django.contrib.sessions',
+            'django.contrib.messages',
+            'django.contrib.staticfiles',
+            'galeria',
+        ]
+    - views.py - Criar aplicação
+        from django.shortcuts import render
+        def index(request):
+            return render(request, 'galeria/index.html')     
+    - urls.py - Criar arquivo dentro de galeria/urls.py
+        from django.urls import path
+        from .views import index
+        urlpatterns = [
+            path('', index, name='index'),
+        ]
+    - setup/urls.py - apontar a urls.py da galeria:
+            path('', include('galeria.urls')),
+-- TEMPLATES
+    - Criar pasta na raiz chamada templates
+    - Criar pasta dentro da templates com o nome do APP (templates/galeria)
+    - Criar index.html dentro da pasta templates/galeria
+    - settings.py - incluir pasta do templates no DIRS
+        TEMPLATES = [
+            {
+                'DIRS': [BASE_DIR / 'templates'],    
+            }
+    - settings.py - incluir arquivos STATICOS
+        STATIC_URL = 'static/'
+        STATICFILES_DIRS = BASE_DIR / 'setup/static'
+        STATIC_ROOT = BASE_DIR / 'static'
+    - Arquivos STATICOS criar dentro da pasta /setup/static
+    - RODAR O COMANDO: python manage.py collectstatic
+    - index.html
+        - no inicio do arquivo:
+            - {% load static %}
+        - caminhos dos CSS alterar:
+            - de: <link rel="stylesheet" href="/styles/style.css">
+            - para: <link rel="stylesheet" href="{% static '/styles/style.css' %}">
+        - Linkar entre urls:
+            - {% url 'index' %}  #essa index ele pega o name= lá do urls.py
+    - DRY, nunca repetir codigos. Fatiar o html;
+        - criar um arquivo base.html na pasta templates\galeria(apps)
+        - {% extends 'galeria/base.html' %} # extende o arquivo base
+        - {% block content %}{% endblock %} # abre e fecha o espaço do conteudo.
 
-django-admin startproject setup .
-python manage.py runserver
-
+-> Alterar a chave do DJANGO para outro arquivo
 1) Crie um novo arquivo chamado .env no diretório raiz da aplicação para armazenar a SECRET_KEY
 Conteúdo do arquivo .env:
-SECRET_KEY=<chave aleatória>COPIAR CÓDIGO
-
+    SECRET_KEY=<chave aleatória>
 2) Instale o pacote python-dotenv
-pip install python-dotenvCOPIAR CÓDIGO
-
+    pip install python-dotenv
 3) Importe os pacotes python-dotenv e os no arquivo settings.py
-from pathlib import os
-from dotenv import load_dotenvCOPIAR CÓDIGO
-
+    from pathlib import os
+    from dotenv import load_dotenv
 4) Importe a SECRET_KEY do arquivo .env e coloque dentro da variável SECRET_KEY no arquivo settings.py
-load_dotenv()
-SECRET_KEY = str(os.getenv('SECRET_KEY'))COPIAR CÓDIGO
-
+    load_dotenv()
+    SECRET_KEY = str(os.getenv('SECRET_KEY'))
 5) Gere um arquivo .gitignore no diretório raiz do projeto e inclua o arquivo .env como conteúdo
 Conteúdo do .gitignore:
-.envCOPIAR CÓDIGO
+    .env
 
 
---> COMANDOS GIT 
-git init
-git add .
-git commit -m "projeto Alura Space"
-git remote add origin https://github.com/vinischneider/alura_space.git
-git branch -M master
-git push origin master
+
+
+
+###### COMANDOS GIT 
+>> git init
+>> git add .
+>> git commit -m "projeto Alura Space"
+>> git remote add origin https://github.com/vinischneider/alura_space.git
+>> git branch -M master
+>> git push origin master
 
 -> para commit e push
-git commit -m "projeto Alura Space"
-git push origin master
+>> git commit -m "projeto Alura Space"
+>> git push origin master
